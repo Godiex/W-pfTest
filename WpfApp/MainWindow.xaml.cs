@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.ViewModels;
 
 namespace WpfApp
 {
@@ -20,9 +22,10 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(IMediator mediator)
         {
             InitializeComponent();
+            DataContext = new UserManagementViewModel(mediator);
         }
     }
 }

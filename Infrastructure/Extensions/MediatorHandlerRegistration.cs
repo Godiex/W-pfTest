@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Unity;
+using Unity.Injection;
+using Unity.Lifetime;
 
 namespace Infrastructure.Extensions
 {
@@ -11,6 +13,13 @@ namespace Infrastructure.Extensions
     {
         public static void RegisterHandlers(IUnityContainer container)
         {
+            container.RegisterType<IMediator, Mediator>();
+
+            container.RegisterType<ServiceFactory>(new InjectionFactory(c =>
+            {
+                return new ServiceFactory(type => c.Resolve(type));
+            }));
+
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             List<Type> handlerTypes = AppDomain.CurrentDomain.GetAssemblies()

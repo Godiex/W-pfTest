@@ -1,8 +1,7 @@
-﻿using Infrastructure.Data;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace Infrastructure
+namespace Infrastructure.Data
 {
     public class SqlConnectionFactory : IDbConnectionFactory
     {
