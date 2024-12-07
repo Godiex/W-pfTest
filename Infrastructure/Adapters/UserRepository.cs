@@ -4,6 +4,7 @@ using Domain.Ports;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;

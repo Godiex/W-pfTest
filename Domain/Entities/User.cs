@@ -10,6 +10,20 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        public User()
+        {
+
+        }
+
+        public User(string identification, string fullName, string email, string phone)
+        {
+            Identification = identification;
+            FullName = fullName;
+            Email = email;
+            Phone = phone;
+            CreatedDate = DateTime.Now;
+        }
+
         public void UpdateContactData(string email, string phone)
         {
             if (string.IsNullOrWhiteSpace(email))

@@ -1,6 +1,4 @@
-﻿using Domain.Ports;
-using Infrastructure.Adapters;
-using Infrastructure.Extensions;
+﻿using Infrastructure.Extensions;
 using Unity;
 
 namespace WpfApp
