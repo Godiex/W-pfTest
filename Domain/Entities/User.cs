@@ -4,10 +4,26 @@ namespace Domain.Entities
 {
     public class User
     {
-        public int Id { get; set; }
+        public string Identification { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public void UpdateContactData(string email, string phone)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("El correo electrónico no puede estar vacío.");
+            }
+
+            if (string.IsNullOrWhiteSpace(phone))
+            {
+                throw new ArgumentException("El número de teléfono no puede estar vacío.");
+            }
+
+            Email = email;
+            Phone = phone;
+        }
     }
 }

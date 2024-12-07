@@ -46,9 +46,10 @@
     <Compile Include="Ports\IAreaRepository.cs" />
     <Compile Include="Ports\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AreaService.cs" />
+    <Compile Include="Services\DomainServiceAttribute.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,9 +6,11 @@ using Dapper;
 using Domain.Entities;
 using Domain.Ports;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Adapters
 {
+    [Repository]
     public class AreaRepository : IAreaRepository
     {
         private readonly IDbConnectionFactory _connectionFactory;
@@ -28,12 +30,29 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task AssignUserToAreaAsync(int userId, int areaId)
+        public async Task AssignUserToAreaAsync(string userIdentification, int areaId)
         {
-            string query = "INSERT INTO UserAreas (UserId, AreaId) VALUES (@UserId, @AreaId)";
+            string query = "INSERT INTO UserAreas ('UserId', AreaId) VALUES (@UserIdentification, @AreaId)";
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
-                await db.ExecuteAsync(query, new { UserId = userId, AreaId = areaId });
+                await db.ExecuteAsync(query, new { UserIdentification = userIdentification, AreaId = areaId });
+            }
+        }
+
+        public async Task<bool> ExistsByIdentificationAsync(int id)
+        {
+            string query = @"
+            SELECT COUNT(1) 
+            FROM Users 
+            WHERE Id = @Identification";
+
+            using (IDbConnection db = _connectionFactory.CreateConnection())
+            {
+                int count = await db.ExecuteScalarAsync<int>(query, new
+                {
+                    Id = id
+                });
+                return count > 0;
             }
         }
     }

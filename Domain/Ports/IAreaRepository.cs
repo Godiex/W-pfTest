@@ -7,6 +7,6 @@ namespace Domain.Ports
     public interface IAreaRepository
     {
         Task<List<Area>> GetAllAreasAsync();
-        Task AssignUserToAreaAsync(int userId, int areaId);
+        Task AssignUserToAreaAsync(string userId, int areaId);
     }
 }

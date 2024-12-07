@@ -2,14 +2,15 @@
 using Domain.Entities;
 using Domain.Ports;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Adapters
 {
+    [Repository]
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
@@ -31,13 +32,67 @@ namespace Infrastructure.Adapters
             }
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task<User> GetByIdentificationAsync(string identification)
+        {
+            string query = @"
+            SELECT Identification, FullName, Email, Phone, CreatedDate 
+            FROM Users 
+            WHERE Identification = @Identification";
+
+            using (IDbConnection db = _connectionFactory.CreateConnection())
+            {
+                User user = await db.QueryFirstOrDefaultAsync<User>(query, new
+                {
+                    Identification = identification
+                });
+                return user;
+            }
+        }
+
+
+        public async Task<bool> ExistsByIdentificationAsync(string identification)
+        {
+            string query = @"
+            SELECT COUNT(1) 
+            FROM Users 
+            WHERE Identification = @Identification";
+
+            using (IDbConnection db = _connectionFactory.CreateConnection())
+            {
+                int count = await db.ExecuteScalarAsync<int>(query, new
+                {
+                    Identification = identification
+                });
+                return count > 0;
+            }
+        }
+
+        public async Task<bool> ExistsByContactDataAsync(string email, string phone)
+        {
+            string query = @"
+            SELECT COUNT(1) 
+            FROM Users 
+            WHERE Email = @Email 
+               OR Phone = @Phone";
+
+            using (IDbConnection db = _connectionFactory.CreateConnection())
+            {
+                int count = await db.ExecuteScalarAsync<int>(query, new
+                {
+                    Email = email,
+                    Phone = phone
+                });
+                return count > 0;
+            }
+        }
+
+        public async Task AddAsync(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
