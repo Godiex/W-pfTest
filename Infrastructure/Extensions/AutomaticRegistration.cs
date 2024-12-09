@@ -1,8 +1,9 @@
-﻿using Domain.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Application.UseCase;
+using Domain.Services;
 using Unity;
 
 namespace Infrastructure.Extensions
@@ -11,14 +12,12 @@ namespace Infrastructure.Extensions
     {
         public static void RegisterRepositories(IUnityContainer container)
         {
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            IEnumerable<Type> _repositories = AppDomain.CurrentDomain.GetAssemblies()
+            IEnumerable<Type> repositories = AppDomain.CurrentDomain.GetAssemblies()
             .Where(assembly =>
             {
                 try
                 {
-                    return assembly.FullName != null && assembly.FullName.Contains("Infrastructure");
+                    return assembly.FullName.Contains("Infrastructure");
                 }
                 catch
                 {
@@ -43,7 +42,7 @@ namespace Infrastructure.Extensions
             .Where(p => p.CustomAttributes.Any(x => x.AttributeType == typeof(RepositoryAttribute)))
             .ToList();
 
-            foreach (Type type in _repositories)
+            foreach (Type type in repositories)
             {
                 Type interfaceType = type.GetInterfaces().FirstOrDefault();
                 if (interfaceType != null)
@@ -55,14 +54,12 @@ namespace Infrastructure.Extensions
 
         public static void RegisterDomainServices(IUnityContainer container)
         {
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            IEnumerable<Type> _services = AppDomain.CurrentDomain.GetAssemblies()
+            IEnumerable<Type> services = AppDomain.CurrentDomain.GetAssemblies()
             .Where(assembly =>
             {
                 try
                 {
-                    return assembly.FullName != null && assembly.FullName.IndexOf("Infrastructure", StringComparison.InvariantCulture) >= 0;
+                    return assembly.FullName.IndexOf("Domain", StringComparison.InvariantCulture) >= 0;
                 }
                 catch
                 {
@@ -84,13 +81,99 @@ namespace Infrastructure.Extensions
                     return Enumerable.Empty<Type>();
                 }
             })
-            .Where(p => p.CustomAttributes.Any(x => x.AttributeType == typeof(RepositoryAttribute)))
+            .Where(p => p.CustomAttributes.Any(x => x.AttributeType == typeof(DomainServiceAttribute)))
             .ToList();
 
 
-            foreach (var type in _services)
+            foreach (Type type in services)
             {
-                var interfaceType = type.GetInterfaces().FirstOrDefault();
+                Type interfaceType = type.GetInterfaces().FirstOrDefault();
+                if (interfaceType != null)
+                {
+                    container.RegisterType(interfaceType, type);
+                }
+            }
+        }
+        
+        public static void RegisterHandlers(IUnityContainer container)
+        {
+            IEnumerable<Type> services = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly =>
+                {
+                    try
+                    {
+                        return assembly.FullName.IndexOf("Application", StringComparison.InvariantCulture) >= 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                })
+                .SelectMany(assembly =>
+                {
+                    try
+                    {
+                        return assembly.GetTypes();
+                    }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        return ex.Types.Where(t => t != null);
+                    }
+                    catch
+                    {
+                        return Enumerable.Empty<Type>();
+                    }
+                })
+                .Where(p => p.CustomAttributes.Any(x => x.AttributeType == typeof(HandlerAttribute)))
+                .ToList();
+
+
+            foreach (Type type in services)
+            {
+                Type interfaceType = type.GetInterfaces().FirstOrDefault();
+                if (interfaceType != null)
+                {
+                    container.RegisterType(interfaceType, type);
+                }
+            }
+        }
+        
+        public static void RegisterViewModel(IUnityContainer container)
+        {
+            IEnumerable<Type> services = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(assembly =>
+                {
+                    try
+                    {
+                        return assembly.FullName.IndexOf("WpfApp", StringComparison.InvariantCulture) >= 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                })
+                .SelectMany(assembly =>
+                {
+                    try
+                    {
+                        return assembly.GetTypes();
+                    }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        return ex.Types.Where(t => t != null);
+                    }
+                    catch
+                    {
+                        return Enumerable.Empty<Type>();
+                    }
+                })
+                .Where(p => p.CustomAttributes.Any(x => x.AttributeType == typeof(ViewModelAttribute)))
+                .ToList();
+
+
+            foreach (Type type in services)
+            {
+                Type interfaceType = type.GetInterfaces().FirstOrDefault();
                 if (interfaceType != null)
                 {
                     container.RegisterType(interfaceType, type);

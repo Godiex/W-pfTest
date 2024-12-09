@@ -22,15 +22,15 @@ namespace Domain.Services
             {
                 throw new Exception("Ya existe un usuario con esta identificación.");
             }
-            await ValidateContactDataAsync(user.Email, user.Phone);
+            await ValidateContactDataAsync(user.Email, user.Phone, userId:null);
 
             await _userRepository.AddAsync(user);
         }
 
 
-        private async Task ValidateContactDataAsync(string email, string phone)
+        private async Task ValidateContactDataAsync(string email, string phone, string userId = null)
         {
-            bool existsByContactData = await _userRepository.ExistsByContactDataAsync(email, phone);
+            bool existsByContactData = await _userRepository.ExistsByContactDataAsync(email, phone, userId);
             if (existsByContactData)
             {
                 throw new Exception("Ya existe un usuario con estos datos de contacto.");
@@ -45,7 +45,7 @@ namespace Domain.Services
                 throw new Exception($"Error no existe el usuario con identificacion {identification}");
             }
 
-            await ValidateContactDataAsync(email, phone);
+            await ValidateContactDataAsync(email, phone, identification);
 
             User userToUpdate = await _userRepository.GetByIdentificationAsync(identification);
 

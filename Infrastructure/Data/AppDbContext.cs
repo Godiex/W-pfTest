@@ -1,5 +1,4 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using System.Data.Entity;
 
 namespace Infrastructure.Data
@@ -10,5 +9,15 @@ namespace Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Area> Areas { get; set; }
+        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Area>()
+                .HasKey(a => a.Identification); 
+
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Identification); 
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

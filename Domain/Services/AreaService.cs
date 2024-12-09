@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Ports;
+﻿using Domain.Ports;
 using System;
 using System.Threading.Tasks;
 
@@ -22,9 +21,19 @@ namespace Domain.Services
             bool existsByIdentification = await _userRepository.ExistsByIdentificationAsync(userIdentification);
             if (!existsByIdentification)
             {
-                throw new Exception($"Error no existe el usuario con identificacion {userIdentification}");
+                throw new Exception($"Error: no existe el usuario con identificacion {userIdentification}");
             }
 
+            bool isAssigned = await _areaRepository.IsUserAssignedToAreaAsync(userIdentification);
+    
+            if (isAssigned)
+            {
+                await _areaRepository.UpdateUserAreaAsync(userIdentification, areaId);
+            }
+            else
+            {
+                await _areaRepository.AssignUserToAreaAsync(userIdentification, areaId);
+            }
         }
     }
 }

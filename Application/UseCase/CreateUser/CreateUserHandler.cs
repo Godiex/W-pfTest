@@ -1,25 +1,23 @@
-﻿using Domain.Entities;
-using Domain.Ports;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Domain.Entities;
+using Domain.Services;
 
-namespace Application.CreateUser
+namespace Application.UseCase.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Unit>
+    [Handler]
+    public class CreateUserHandler
     {
-        private readonly IUserRepository _userRepository;
+        private readonly UserService _userService;
 
-        public CreateUserCommandHandler(IUserRepository userRepository)
+        public CreateUserHandler(UserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateUserCommand request)
         {
             User user = new User(request.Identification, request.FullName, request.Email, request.Phone);
-            await _userRepository.AddAsync(user);
-            return new Unit();
+            await _userService.Create(user);
         }
     }
 }

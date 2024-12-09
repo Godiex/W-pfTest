@@ -1,17 +1,14 @@
 ﻿using FluentValidation;
 
-namespace Application.CreateUser
+namespace Application.UseCase.CreateUser
 {
-
-    using FluentValidation;
-
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
     {
-        public CreateUserCommandValidator()
+        public CreateUserValidator()
         {
             RuleFor(command => command.Identification)
                 .NotEmpty().WithMessage("La identificación es requerida.")
-                .Length(8, 10).WithMessage("La identificación debe tener entre 5 y 20 caracteres.");
+                .Length(8, 10).WithMessage("La identificación debe tener entre 8 y 10 digitos.");
 
             RuleFor(command => command.FullName)
                 .NotEmpty().WithMessage("El nombre completo es requerido.")

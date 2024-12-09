@@ -32,28 +32,42 @@ namespace Infrastructure.Adapters
 
         public async Task AssignUserToAreaAsync(string userIdentification, int areaId)
         {
-            string query = "INSERT INTO UserAreas ('UserId', AreaId) VALUES (@UserIdentification, @AreaId)";
+            string query = @"
+            INSERT INTO UserAreas (UserIdentification, AreaIdentification) 
+            VALUES (@UserIdentification, @AreaId)";
+    
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
                 await db.ExecuteAsync(query, new { UserIdentification = userIdentification, AreaId = areaId });
             }
         }
 
-        public async Task<bool> ExistsByIdentificationAsync(int id)
+        public async Task UpdateUserAreaAsync(string userIdentification, int areaId)
+        {
+            string query = @"
+            UPDATE UserAreas 
+            SET AreaIdentification = @AreaId
+            WHERE UserIdentification = @UserIdentification";
+    
+            using (IDbConnection db = _connectionFactory.CreateConnection())
+            {
+                await db.ExecuteAsync(query, new { UserIdentification = userIdentification, AreaId = areaId });
+            }
+        }
+
+        public async Task<bool> IsUserAssignedToAreaAsync(string userIdentification)
         {
             string query = @"
             SELECT COUNT(1) 
-            FROM Users 
-            WHERE Id = @Identification";
-
+            FROM UserAreas 
+            WHERE UserIdentification = @UserIdentification";
+    
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
-                int count = await db.ExecuteScalarAsync<int>(query, new
-                {
-                    Id = id
-                });
+                int count = await db.ExecuteScalarAsync<int>(query, new { UserIdentification = userIdentification });
                 return count > 0;
             }
         }
+
     }
 }

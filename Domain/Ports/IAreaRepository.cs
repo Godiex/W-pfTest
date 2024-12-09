@@ -8,5 +8,7 @@ namespace Domain.Ports
     {
         Task<List<Area>> GetAllAreasAsync();
         Task AssignUserToAreaAsync(string userId, int areaId);
+        Task UpdateUserAreaAsync(string userIdentification, int areaId);
+        Task<bool> IsUserAssignedToAreaAsync(string userIdentification);
     }
 }

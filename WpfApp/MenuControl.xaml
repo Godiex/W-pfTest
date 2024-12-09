@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="WpfApp.MenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border Background="#2E3B4E">
+        <StackPanel>
+            <TextBlock Text="Menú Principal" 
+                       Foreground="White" 
+                       FontSize="18" 
+                       Margin="10"
+                       HorizontalAlignment="Center"/>
+            
+            <Button Content="Gestión de Usuarios" 
+                    Style="{StaticResource MenuButtonStyle}" 
+                    Command="{Binding NavigateCommand}" 
+                    CommandParameter="UserManagementView"
+                    Click="Button_Click"/>
+            
+            <Button Content="Gestión de Áreas" 
+                    Style="{StaticResource MenuButtonStyle}" 
+                    Command="{Binding NavigateCommand}" 
+                    CommandParameter="AreaManagementView"
+                    Click="Button_Click"/>
+        </StackPanel>
+    </Border>
+</UserControl>
+

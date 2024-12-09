@@ -68,24 +68,26 @@ namespace Infrastructure.Adapters
             }
         }
 
-        public async Task<bool> ExistsByContactDataAsync(string email, string phone)
+        public async Task<bool> ExistsByContactDataAsync(string email, string phone, string userId = null)
         {
             string query = @"
             SELECT COUNT(1) 
             FROM Users 
-            WHERE Email = @Email 
-               OR Phone = @Phone";
+            WHERE (Email = @Email OR Phone = @Phone)
+                  AND (@UserId IS NULL OR Identification != @UserId)";
 
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
                 int count = await db.ExecuteScalarAsync<int>(query, new
                 {
                     Email = email,
-                    Phone = phone
+                    Phone = phone,
+                    UserId = userId
                 });
                 return count > 0;
             }
         }
+
 
         public async Task AddAsync(User user)
         {

@@ -11,6 +11,6 @@ namespace Domain.Ports
         Task UpdateAsync(User user);
         Task<User> GetByIdentificationAsync(string identification);
         Task<bool> ExistsByIdentificationAsync(string identification);
-        Task<bool> ExistsByContactDataAsync(string email, string phone);
+        Task<bool> ExistsByContactDataAsync(string email, string phone, string userId = null);
     }
 }

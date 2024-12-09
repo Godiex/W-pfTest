@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using Infrastructure.Extensions;
 using Unity;
 
 namespace WpfApp
@@ -8,7 +11,7 @@ namespace WpfApp
     /// </summary>
     public partial class App : System.Windows.Application
     {
-        public static IUnityContainer Container { get; private set; }
+        private static IUnityContainer Container { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {

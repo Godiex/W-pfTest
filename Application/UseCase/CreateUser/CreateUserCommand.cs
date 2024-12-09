@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Application.CreateUser
+namespace Application.UseCase.CreateUser
 {
-    public class CreateUserCommand : IRequest<Unit>
+    public class CreateUserCommand
     {
         public string Identification { get; set; }
         public string FullName { get; set; }

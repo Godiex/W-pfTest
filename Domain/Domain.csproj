@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserArea.cs" />
     <Compile Include="Ports\IAreaRepository.cs" />
     <Compile Include="Ports\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

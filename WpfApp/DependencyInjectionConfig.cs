@@ -1,12 +1,14 @@
-﻿using Infrastructure.Data;
+﻿using System;
+using System.Configuration;
+using System.Windows.Controls;
+using Infrastructure.Data;
 using Infrastructure.Extensions;
 using Unity;
 using Unity.Injection;
-using System.Configuration;
 
 namespace WpfApp
 {
-    public class DependencyInjectionConfig
+    public static class DependencyInjectionConfig
     {
         public static IUnityContainer RegisterDependencies()
         {
@@ -14,11 +16,10 @@ namespace WpfApp
             IUnityContainer container = new UnityContainer();
             container.RegisterType<AppDbContext>();
             container.RegisterType<IDbConnectionFactory, SqlConnectionFactory>(new InjectionConstructor(connectionString));
-            ValidatorRegistration.RegisterValidators(container);
-            MediatorHandlerRegistration.RegisterHandlers(container);
-            ValidationPipelineRegistration.RegisterValidationPipeline(container);
             AutomaticRegistration.RegisterRepositories(container);
             AutomaticRegistration.RegisterDomainServices(container);
+            AutomaticRegistration.RegisterHandlers(container);
+            AutomaticRegistration.RegisterViewModel(container);
             return container;
         }
     }
