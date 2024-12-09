@@ -43,7 +43,7 @@ namespace WpfApp.ViewModels
             Task.Run(() => LoadUsersAsync());
         }
 
-        private async Task LoadUsersAsync()
+        public async Task LoadUsersAsync()
         {
             if (Users == null)
             {

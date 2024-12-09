@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Application.UseCase.GetLast10UsersHandler;
+using WpfApp.ViewModels;
 
-namespace WpfApp
+namespace WpfApp.Views.Users
 {
     public partial class UserManagementView : UserControl
     {
@@ -11,7 +12,16 @@ namespace WpfApp
         public UserManagementView(Frame mainFrame)
         {
             InitializeComponent();
+            Loaded += UserManagementView_Loaded;
             _mainFrame = mainFrame;
+        }
+        
+        private async void UserManagementView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is UserManagementViewModel viewModel)
+            {
+                await viewModel.LoadUsersAsync();
+            }
         }
 
         private void AddUserButton_Click(object sender, System.Windows.RoutedEventArgs e)

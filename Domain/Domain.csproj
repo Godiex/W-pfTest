@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\UserWithAreaDto.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserArea.cs" />
     <Compile Include="Ports\IAreaRepository.cs" />
     <Compile Include="Ports\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +51,5 @@
     <Compile Include="Services\DomainServiceAttribute.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

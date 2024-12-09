@@ -1,12 +1,13 @@
 ﻿using Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Dtos;
 
 namespace Domain.Ports
 {
     public interface IUserRepository
     {
-        Task<List<User>> GetLast10UsersAsync();
+        Task<List<UserWithAreaDto>> GetLast10UsersAsync();
         Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task<User> GetByIdentificationAsync(string identification);

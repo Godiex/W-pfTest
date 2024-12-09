@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Dtos;
 
 namespace Infrastructure.Adapters
 {
@@ -23,15 +24,28 @@ namespace Infrastructure.Adapters
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<List<User>> GetLast10UsersAsync()
+        public async Task<List<UserWithAreaDto>> GetLast10UsersAsync()
         {
-            string query = "SELECT TOP 10 * FROM Users ORDER BY CreatedDate DESC";
+            string query = @"
+            SELECT TOP 10 
+                u.Identification,
+                u.FullName,
+                u.Email,
+                u.Phone,
+                u.CreatedDate,
+                ISNULL(a.Name, 'No Asignado') AS AreaName
+            FROM Users u
+            LEFT JOIN UserAreas ua ON u.Identification = ua.UserId
+            LEFT JOIN Areas a ON ua.AreaId = a.Identification
+            ORDER BY u.CreatedDate DESC";
+
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
-                IEnumerable<User> result = await db.QueryAsync<User>(query);
+                IEnumerable<UserWithAreaDto> result = await db.QueryAsync<UserWithAreaDto>(query);
                 return result.ToList();
             }
         }
+
 
         public async Task<User> GetByIdentificationAsync(string identification)
         {
@@ -88,6 +102,7 @@ namespace Infrastructure.Adapters
             }
         }
 
+        
 
         public async Task AddAsync(User user)
         {

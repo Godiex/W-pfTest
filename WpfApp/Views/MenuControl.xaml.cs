@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     public partial class MenuControl : UserControl
     {

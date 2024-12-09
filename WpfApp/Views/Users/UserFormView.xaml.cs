@@ -8,7 +8,7 @@ using Application.UseCase.CreateUser;
 using WpfApp.ViewModels;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
-namespace WpfApp
+namespace WpfApp.Views.Users
 {
     public partial class UserFormView : UserControl
     {

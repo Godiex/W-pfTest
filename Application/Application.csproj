@@ -56,10 +56,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UseCase\AssignUserToArea\AreaDto.cs" />
+    <Compile Include="UseCase\AssignUserToArea\AsignUsertToAreaHandler.cs" />
     <Compile Include="UseCase\CreateUser\CreateUserCommand.cs" />
     <Compile Include="UseCase\CreateUser\CreateUserHandler.cs" />
     <Compile Include="UseCase\CreateUser\CreateUserValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseCase\GetAllAreas\AreaDto.cs" />
+    <Compile Include="UseCase\GetAllAreas\GetAllAreasHandler.cs" />
     <Compile Include="UseCase\GetLast10UsersHandler\GetAllUsersHandler.cs" />
     <Compile Include="UseCase\GetLast10UsersHandler\UserDto.cs" />
     <Compile Include="UseCase\HandlerAttribute.cs" />

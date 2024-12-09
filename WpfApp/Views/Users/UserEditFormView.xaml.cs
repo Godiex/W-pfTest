@@ -9,7 +9,7 @@ using Application.UseCase.UpdateContactData;
 using WpfApp.ViewModels;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
-namespace WpfApp
+namespace WpfApp.Views.Users
 {
     public partial class UserEditFormView : UserControl
     {

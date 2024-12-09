@@ -111,21 +111,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DependencyInjectionConfig.cs" />
-    <Compile Include="MenuControl.xaml.cs">
-      <DependentUpon>MenuControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserEditFormView.xaml.cs">
-      <DependentUpon>UserEditFormView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserFormView.xaml.cs">
-      <DependentUpon>UserFormView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserManagementView.xaml.cs">
-      <DependentUpon>UserManagementView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ValidationUtils.cs" />
+    <Compile Include="ViewModels\AreaManagementViewModel.cs" />
     <Compile Include="ViewModels\UserManagementViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Areas\AreaManagementView.xaml.cs">
+      <DependentUpon>AreaManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuControl.xaml.cs">
+      <DependentUpon>MenuControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserEditFormView.xaml.cs">
+      <DependentUpon>UserEditFormView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserFormView.xaml.cs">
+      <DependentUpon>UserFormView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserManagementView.xaml.cs">
+      <DependentUpon>UserManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ValidationUtils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -138,11 +142,12 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MenuControl.xaml" />
     <Page Include="Styles.xaml" />
-    <Page Include="UserEditFormView.xaml" />
-    <Page Include="UserFormView.xaml" />
-    <Page Include="UserManagementView.xaml" />
+    <Page Include="Views\Areas\AreaManagementView.xaml" />
+    <Page Include="Views\MenuControl.xaml" />
+    <Page Include="Views\Users\UserEditFormView.xaml" />
+    <Page Include="Views\Users\UserFormView.xaml" />
+    <Page Include="Views\Users\UserManagementView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

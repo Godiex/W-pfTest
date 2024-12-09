@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="WpfApp.Views.Areas.AreaManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="10">
+        <!-- Título -->
+        <TextBlock Text="Gestión de Áreas" FontSize="24" FontFamily="Courier New" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Layout de contenido -->
+        <Grid Margin="0,40,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Lista de Áreas -->
+            <DataGrid Grid.Column="0"
+                      ItemsSource="{Binding Areas}" 
+                      AutoGenerateColumns="False" 
+                      SelectedItem="{Binding SelectedArea}" 
+                      SelectionMode="Single" 
+                      SelectionUnit="FullRow" 
+                      IsReadOnly="True" 
+                      Focusable="False"
+                      BorderBrush="#2E3B4E"
+                      BorderThickness="2"
+                      RowBackground="White"
+                      AlternatingRowBackground="#F5F5F5"
+                      HorizontalGridLinesBrush="#D3D3D3"
+                      VerticalGridLinesBrush="#D3D3D3"
+                      GridLinesVisibility="None">
+                <!-- Estilo de encabezados -->
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#2E3B4E" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <!-- Columnas -->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Identification}" Width="Auto" />
+                    <DataGridTextColumn Header="Área" Binding="{Binding Name}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <!-- Asignación de Usuario -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="Asignar Usuario" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock Text="{Binding SelectedArea.Name, FallbackValue='Ningún área seleccionada'}" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#2E3B4E" 
+                           Margin="0,10,0,20"/>
+                <ComboBox ItemsSource="{Binding Users}" 
+                          SelectedItem="{Binding SelectedUser}" 
+                          DisplayMemberPath="FullName" 
+                          Width="200" />
+                <Button Content="Asignar" 
+                        Command="{Binding AssignUserToAreaCommand}" 
+                        Margin="0,20,0,0" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentValidation.Results;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     public static class ValidationUtils
     {

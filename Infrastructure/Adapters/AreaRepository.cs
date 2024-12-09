@@ -22,7 +22,7 @@ namespace Infrastructure.Adapters
 
         public async Task<List<Area>> GetAllAreasAsync()
         {
-            string query = "SELECT * FROM Areas";
+            string query = "SELECT * FROM Areas ORDER BY Identification";
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
                 IEnumerable<Area> result = await db.QueryAsync<Area>(query);
@@ -33,7 +33,7 @@ namespace Infrastructure.Adapters
         public async Task AssignUserToAreaAsync(string userIdentification, int areaId)
         {
             string query = @"
-            INSERT INTO UserAreas (UserIdentification, AreaIdentification) 
+            INSERT INTO UserAreas (UserId, AreaId) 
             VALUES (@UserIdentification, @AreaId)";
     
             using (IDbConnection db = _connectionFactory.CreateConnection())
@@ -46,8 +46,8 @@ namespace Infrastructure.Adapters
         {
             string query = @"
             UPDATE UserAreas 
-            SET AreaIdentification = @AreaId
-            WHERE UserIdentification = @UserIdentification";
+            SET AreaId = @AreaId
+            WHERE UserId = @UserIdentification";
     
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {
@@ -60,7 +60,7 @@ namespace Infrastructure.Adapters
             string query = @"
             SELECT COUNT(1) 
             FROM UserAreas 
-            WHERE UserIdentification = @UserIdentification";
+            WHERE UserId = @UserIdentification";
     
             using (IDbConnection db = _connectionFactory.CreateConnection())
             {

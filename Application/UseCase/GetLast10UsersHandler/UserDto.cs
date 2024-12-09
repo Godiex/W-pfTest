@@ -10,14 +10,17 @@ namespace Application.UseCase.GetLast10UsersHandler
         public string Phone { get; set; }
         public DateTime CreatedDate { get; set; }
         public int Index { get; set; }
+        
+        public string AreaName { get; set; }
 
-        public UserDto(string identification, string fullName, string email, string phone, DateTime createdDate)
+        public UserDto(string identification, string fullName, string email, string phone, DateTime createdDate, string areaName)
         {
             Identification = identification;
             FullName = fullName;
             Email = email;
             Phone = phone;
             CreatedDate = createdDate;
+            AreaName = areaName;
         }
     }
 }
